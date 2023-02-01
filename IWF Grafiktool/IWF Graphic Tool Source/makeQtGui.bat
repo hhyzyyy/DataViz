@@ -1,1 +1,0 @@
-pyuic5 -o src/view/mainWindow.py qtDesignElements/qtDesign.ui
