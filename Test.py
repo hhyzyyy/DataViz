@@ -9,7 +9,10 @@ from MyUtils import utils
 from pylatexenc.latex2text import LatexNodes2Text
 from pylatexenc.latexencode import unicode_to_latex
 
-utils.modify_logo("output/add_std.html")
+
+print(3*3.7795275590551)
+
+# utils.modify_logo("output/add_std.html")
 
 # df = pd.read_excel("input/Axial WAIS.xlsx", header=1)
 #

@@ -8,10 +8,10 @@ import os
 import re
 import numpy as np
 import yaml
+
 from bs4 import BeautifulSoup
-
 from pylatexenc.latex2text import LatexNodes2Text
-
+from queue import PriorityQueue
 
 abspath = os.path.abspath(__file__)
 
@@ -53,6 +53,7 @@ def add_unit(fig, x=None, x_unit=None, y=None, y_unit=None):
             )
         )
         fig = update_hover(fig, x_unit)
+        fig = resize_window(fig, x_range=x[:2], y_range=y[:2])
         return fig
 
 
@@ -60,7 +61,6 @@ def handle_latex(latex):
     """
     Convert Latex to Unicode
     """
-
     unit = LatexNodes2Text().latex_to_text(latex)
     sup = re.findall(r"\^{[^}]+}", latex)
     sub = re.findall(r"_{[^}]+}", latex)
@@ -88,10 +88,18 @@ def handle_latex(latex):
     return unit
 
 
-def update_hover(fig, unit):
-    unit = handle_latex(unit)
+def update_hover(fig, x_unit=None, y_unit=None):
+    # x_units = handle_latex(x_unit)
+    # print(x_units)
+    # y_units = handle_latex(y_unit)
+
+    q = PriorityQueue()
+    # Use the priority queue to get the maximum value
+    for i in range(len(fig.data)):
+        q.put(len(fig.data[i]["x"]))
+
     fig.update_traces(
-        text=[unit for _ in range(len(fig.data[0]["hovertext"]))],
+        text=[x_unit for _ in range(q.queue[-1])],
         hovertemplate=fig.layout["xaxis"]["title"]["text"] + r": %{x} %{text} <extra></extra>",
     )
     return fig
@@ -131,7 +139,12 @@ def modify_logo(image_path, logo="TU_Berlin_logo", href=None, hover_text=None):
     new_image = os.path.splitext(image_path)[0] + f"_{logo}" + ".html"
     with open(new_image, "w") as f:
         f.write(soup)
-        
+
+
+def resize_window(fig, x_range=None, y_range=None):
+    fig.update_xaxes(range=x_range)
+    fig.update_yaxes(range=y_range)
+    return fig
 
 # def get_error(x, error_y, sort):
 #     if error_y is not None:
@@ -181,6 +194,3 @@ def modify_logo(image_path, logo="TU_Berlin_logo", href=None, hover_text=None):
 #             selector=dict(type='scatter')
 #         )
 #     return fig
-
-
-

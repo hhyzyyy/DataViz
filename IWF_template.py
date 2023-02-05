@@ -13,7 +13,7 @@ axis_layout = dict(showline = True,  linewidth=1.5, linecolor='black',
 
 #Colors
 ## categorical Colors
-iwfColors_ohneWeiß = ['black', 'rgb(159, 182, 196)', 'rgb(125, 102, 102)', 'rgb(153, 0, 0)']
+iwfColors_ohneWeiß =  ['rgb(153, 0, 0)', 'rgb(159, 182, 196)', 'rgb(125, 102, 102)',  'black']
 FraunhoferColors =  ['rgb(0, 152, 121)', 'rgb(0, 153, 178)', 'rgb(67, 105, 123)', 'rgb(97, 101, 103)', 'rgb(147, 151, 153)', 'rgb(199, 201, 202)'] 
 PTZ_colores = iwfColors_ohneWeiß + FraunhoferColors
 
@@ -29,7 +29,8 @@ IWF_template_raw.layout = dict(
                         font = dict(family = 'Arial', size = 14, color = 'black'),
                        plot_bgcolor ='white',
                        xaxis = axis_layout,
-                       yaxis = axis_layout,
+                       yaxis = axis_layout
+    
                     )
 IWF_template_raw.layout.shapes = [dict(name = 'black_frame',type="rect", xref="paper", yref="paper", x0=0, y0=0, x1=1.0, y1=1.0, line=dict(color="black", width=1))]
 
@@ -38,7 +39,7 @@ IWF_template_raw.layout.colorscale.sequential = IWF_Red_Fade
 
 pio.templates["IWF_template"] = 'plotly+IWF_template_raw'
 
-# pio.templates.default = "IWF_template"
+pio.templates.default = "IWF_template"
 
 
 
