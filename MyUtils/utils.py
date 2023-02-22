@@ -15,7 +15,7 @@ from queue import PriorityQueue
 
 abspath = os.path.abspath(__file__)
 
-
+ 
 def read_config():
     path = abspath.replace("utils.py", "misc/config.yaml")
     with open(path, "r", errors='ignore') as fs:
@@ -29,7 +29,8 @@ def get_tickvals_ticktext(start, end, step, unit):
         raise Exception(
             f"[WARNING]: Please change the range of x or y to ensure that at least two scales exist: {tickvals}")
     ticktext = list(tickvals).copy()
-    ticktext[-2] = unit
+    if unit is not None:
+        ticktext[-2] = unit
     return tickvals, ticktext
 
 
@@ -111,6 +112,7 @@ subscript = "ₐ!!!ₑ!!ₕ!!ₖₗₘₙₒₚ!!ₛₜ!!!ₓ!!!!!!!!!!!!!!!!!!!
 
 
 def resize_figure(fig, width, height):
+    """ The units of width and height are mm """
     mm_px_ratio = 3.7795275590551  # 1 mm = 3.7795275590551 px
     fig.update_layout(
         width=width * mm_px_ratio,
